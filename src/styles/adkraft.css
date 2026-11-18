@@ -1,0 +1,39 @@
+/*
+ * AdKraft theme overrides on top of Untitled UI.
+ * Values are taken from the Figma file's variables (Adkraft-tool-revamp).
+ */
+@theme {
+    /* Figma "Gray (light mode)" ramp. Untitled UI maps its semantic tokens
+       (text-primary, border-secondary, …) onto neutral-*, so this makes every
+       Untitled UI component use the exact Figma grays. */
+    --color-neutral-25: #fdfdfd;
+    --color-neutral-50: #fafafa;
+    --color-neutral-100: #f5f5f5;
+    --color-neutral-200: #e9eaeb;
+    --color-neutral-300: #d5d7da;
+    --color-neutral-400: #a4a7ae;
+    --color-neutral-500: #717680;
+    --color-neutral-600: #535862;
+    --color-neutral-700: #414651;
+    --color-neutral-800: #252b37;
+    --color-neutral-900: #181d27;
+    --color-neutral-950: #0a0d12;
+
+    /* AdKraft brand: primary buttons are black (button-primary-bg), focus is the gradient blue */
+    --color-bg-brand-solid: #000000;
+    --color-bg-brand-solid_hover: #181d27;
+    --color-border-brand: #5b8cff;
+    --color-focus-ring: #5b8cff;
+
+    /* Tokens used in the Figma file that Untitled UI React doesn't ship */
+    --color-bg-active: #fafafa;
+    --color-fg-rail: #94979c; /* Gray (dark mode)/400 — inactive rail icons */
+    --color-indicator: #2e90fa; /* utility-blue-500 — active nav indicator */
+    --color-adkraft-blue: #5b8cff;
+    --color-adkraft-mauve: #b68cac;
+    --color-adkraft-pink: #f57489;
+    --color-status-plan-ready: #7a5af8;
+    --color-status-researched: #22c55e;
+    --color-status-researching: #5b8cff;
+    --color-status-ready: #a3a3a3;
+}

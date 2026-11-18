@@ -1,0 +1,13 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Anim &#194;&#183; Spinner">
+<path id="Track" d="M14 7C14 10.866 10.866 14 7 14C3.13401 14 0 10.866 0 7C0 3.13401 3.13401 0 7 0C10.866 0 14 3.13401 14 7ZM2 7C2 9.76142 4.23858 12 7 12C9.76142 12 12 9.76142 12 7C12 4.23858 9.76142 2 7 2C4.23858 2 2 4.23858 2 7Z" fill="#E9EAEB"/>
+<path id="Arc" d="M7 0C8.38447 -6.05171e-08 9.73785 0.410543 10.889 1.17971C12.0401 1.94888 12.9373 3.04213 13.4672 4.32122C13.997 5.6003 14.1356 7.00777 13.8655 8.36563C13.5954 9.7235 12.9287 10.9708 11.9497 11.9497L10.5355 10.5355C11.2348 9.83627 11.711 8.94536 11.9039 7.97545C12.0969 7.00555 11.9978 6.00021 11.6194 5.08658C11.241 4.17295 10.6001 3.39206 9.77785 2.84265C8.95561 2.29324 7.98891 2 7 2L7 0Z" fill="url(#paint0_linear_0_4)"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_4" x1="0" y1="7" x2="14" y2="7" gradientUnits="userSpaceOnUse">
+<stop stop-color="#5B8CFF"/>
+<stop offset="0.5" stop-color="#B68CAC"/>
+<stop offset="1" stop-color="#F57489"/>
+</linearGradient>
+</defs>
+</svg>
