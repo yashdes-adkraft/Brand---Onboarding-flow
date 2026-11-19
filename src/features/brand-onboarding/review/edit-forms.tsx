@@ -22,11 +22,7 @@ import {
 export const LogoTile = ({ logo, name }: { logo: string | null; name: string }) =>
     logo ? (
         <div className="relative size-14 shrink-0 overflow-hidden rounded-lg">
-            {logo === DEFAULT_LOGO ? (
-                <img src={brandLogo} alt={`${name} logo`} className="absolute top-[-0.71%] left-[-31.48%] h-[110.38%] w-[168.33%] max-w-none" />
-            ) : (
-                <img src={logo} alt={`${name} logo`} className="size-full object-cover" />
-            )}
+            <img src={logo === DEFAULT_LOGO ? brandLogo : logo} alt={`${name} logo`} className="size-full object-cover" />
         </div>
     ) : (
         <div className="flex size-14 shrink-0 items-center justify-center rounded-lg border border-dashed border-primary bg-secondary">
@@ -107,7 +103,7 @@ export const BrandEditForm = (props: FormProps<BrandValues>) => {
                     <Input
                         aria-label="Brand name"
                         size="lg"
-                        placeholder="Brewbloom Coffee"
+                        placeholder="Aftershoot"
                         value={values.name}
                         onChange={(v) => set("name", v)}
                         isInvalid={showErrors && !!nameError}

@@ -39,6 +39,55 @@ export interface OnboardingModalProps {
     className?: string;
 }
 
+/** The glow, top fade and header (back link, progress, save button) that every step shares — inside the modal, or inside a wave view. */
+export const ModalFrame = ({
+    phase,
+    phaseFill,
+    glow = "top",
+    topFade = glow !== "none",
+    chrome = true,
+    saveLabel = "Save and exit",
+    onBack,
+    backLabel = "Brands",
+    onSaveAndExit,
+    children,
+}: Pick<OnboardingModalProps, "phase" | "phaseFill" | "glow" | "topFade" | "chrome" | "saveLabel" | "onBack" | "backLabel" | "onSaveAndExit" | "children">) => (
+    <>
+    {glow === "center" && <img src={glowCenter} alt="" aria-hidden className="pointer-events-none absolute inset-0 size-full max-w-none" />}
+    {glow === "top" && (
+        <img src={glowTop} alt="" aria-hidden className="pointer-events-none absolute top-[-480px] left-[-131px] h-[880px] w-[1460px] max-w-none" />
+    )}
+    {topFade && (
+        <div
+            aria-hidden
+            className="pointer-events-none absolute top-0 left-[-121px] h-[900px] w-[1440px] bg-linear-to-b from-white/0 via-white/60 via-55% to-white"
+        />
+    )}
+
+    {chrome && (
+        <>
+            <button
+                type="button"
+                onClick={onBack}
+                className="absolute top-8 left-8 z-10 flex items-center gap-1.5 rounded-md text-sm font-medium text-tertiary outline-focus-ring hover:text-secondary focus-visible:outline-2 focus-visible:outline-offset-2"
+            >
+                <ChevronLeft className="size-4" />
+                {backLabel}
+            </button>
+
+            <OnboardingProgress className="absolute top-6 left-[299px] z-10 max-lg:hidden" current={phase} currentFill={phaseFill} />
+
+            <Button color="secondary" size="sm" // Right-anchored (Figma: x 1042 + 118 wide = 38px from the edge) so longer labels like "Run in background" grow leftwards.
+                className="absolute top-6 right-[38px] z-10 max-lg:right-6" onClick={onSaveAndExit}>
+                {saveLabel}
+            </Button>
+        </>
+    )}
+
+        {children}
+    </>
+);
+
 /** The persistent new-brand modal (Figma "Modal", 1198×751) — every onboarding step renders inside it. */
 export const OnboardingModal = ({
     isOpen,
@@ -66,38 +115,19 @@ export const OnboardingModal = ({
     >
         <Modal className={cx("h-[751px] w-[1198px] max-w-full overflow-clip rounded-2xl shadow-none sm:mt-px sm:rounded-2xl", modalClassName)}>
             <Dialog aria-label={ariaLabel} className={cx("relative h-full overflow-clip", className)}>
-                {glow === "center" && <img src={glowCenter} alt="" aria-hidden className="pointer-events-none absolute inset-0 size-full max-w-none" />}
-                {glow === "top" && (
-                    <img src={glowTop} alt="" aria-hidden className="pointer-events-none absolute top-[-480px] left-[-131px] h-[880px] w-[1460px] max-w-none" />
-                )}
-                {topFade && (
-                    <div
-                        aria-hidden
-                        className="pointer-events-none absolute top-0 left-[-121px] h-[900px] w-[1440px] bg-linear-to-b from-white/0 via-white/60 via-55% to-white"
-                    />
-                )}
-
-                {chrome && (
-                    <>
-                        <button
-                            type="button"
-                            onClick={onBack}
-                            className="absolute top-8 left-8 z-10 flex items-center gap-1.5 rounded-md text-sm font-medium text-tertiary outline-focus-ring hover:text-secondary focus-visible:outline-2 focus-visible:outline-offset-2"
-                        >
-                            <ChevronLeft className="size-4" />
-                            {backLabel}
-                        </button>
-
-                        <OnboardingProgress className="absolute top-6 left-[299px] z-10 max-lg:hidden" current={phase} currentFill={phaseFill} />
-
-                        <Button color="secondary" size="sm" // Right-anchored (Figma: x 1042 + 118 wide = 38px from the edge) so longer labels like "Run in background" grow leftwards.
-                            className="absolute top-6 right-[38px] z-10 max-lg:right-6" onClick={onSaveAndExit}>
-                            {saveLabel}
-                        </Button>
-                    </>
-                )}
-
-                {children}
+                <ModalFrame
+                    phase={phase}
+                    phaseFill={phaseFill}
+                    glow={glow}
+                    topFade={topFade}
+                    chrome={chrome}
+                    saveLabel={saveLabel}
+                    onBack={onBack}
+                    backLabel={backLabel}
+                    onSaveAndExit={onSaveAndExit}
+                >
+                    {children}
+                </ModalFrame>
             </Dialog>
         </Modal>
     </ModalOverlay>

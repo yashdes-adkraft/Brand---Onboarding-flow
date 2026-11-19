@@ -2,7 +2,6 @@ import type { StepDefinition, StepId } from "../flow";
 import { websiteStep } from "./website";
 import { categoryStep } from "./category";
 import { audienceStep } from "./audience";
-import { goalsStep } from "./goals";
 import { assetsStep } from "./assets";
 import { researchStep } from "./research";
 import { reviewStep } from "./review";
@@ -15,7 +14,6 @@ export const STEPS: Record<StepId, StepDefinition> = {
     website: websiteStep,
     category: categoryStep,
     audience: audienceStep,
-    goals: goalsStep,
     assets: assetsStep,
     research: researchStep,
     review: reviewStep,

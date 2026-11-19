@@ -26,7 +26,8 @@ src/
     onboarding-progress.tsx  3-phase progress bar
     option-card.tsx          Option cards (radio / checkbox groups)
     krafty-pill.tsx          "Kraftly …" research status pill + sparkle
-    steps/                   One file per step: website, category, audience, goals, assets,
+    trends-ready-wave.tsx    Distortion wave carrying the trends screen into the final screen
+    steps/                   One file per step: website, category, audience, assets,
                              research, review, competitors, trends, ready
     intake/ research/ review/ market/   Per-step building blocks
   app.tsx                Prototype harness
@@ -55,5 +56,7 @@ Text matches Figma verbatim, including "…and setup the brand identity." Gramma
 change it in Figma and code together if you agree.
 
 ## Supply-chain note
-All npm packages are pinned to exact versions published at least 2 weeks before this build.
+All npm packages are pinned to exact versions. All but one were published at least 2 weeks before this build.
+
+The exception is `distortion-waves@0.1.0` (the wave between the trends and final screens). It was published on the day it was added (2026-11-18), by a single maintainer. It was added at the project owner's request after reading its source (no install scripts, no runtime dependencies, no storage or cookie access; its only network calls fetch the page's own images, fonts and CSS to picture the view). Re-check it, and consider a newer version, once it is two weeks old.
 # Brand---Onboarding-flow

@@ -4,6 +4,11 @@ import { Dialog, Modal, ModalOverlay } from "@/components/application/modals/mod
 import { Avatar } from "@/components/base/avatar/avatar";
 import { Button } from "@/components/base/buttons/button";
 import { Input } from "@/components/base/input/input";
+import facebookIcon from "@/assets/market/facebook.svg";
+import instagramIcon from "@/assets/market/instagram.svg";
+
+const Instagram = ({ className }: { className?: string }) => <img src={instagramIcon} alt="" className={className} />;
+const Facebook = ({ className }: { className?: string }) => <img src={facebookIcon} alt="" className={className} />;
 import { type Competitor, isValidWebsite, marketActions } from "./market-store";
 
 export const initials = (name: string) =>
@@ -107,8 +112,8 @@ const EditForm = ({ competitor, onClose }: { competitor: Competitor; onClose: ()
                 isInvalid={websiteError}
                 hint={websiteError ? <span role="alert">Enter a valid website</span> : undefined}
             />
-            <Input size="lg" label="Instagram" value={instagram} onChange={setInstagram} />
-            <Input size="lg" label="Facebook" value={facebook} onChange={setFacebook} />
+            <Input size="lg" label="Instagram" icon={Instagram} value={instagram} onChange={setInstagram} />
+            <Input size="lg" label="Facebook" icon={Facebook} value={facebook} onChange={setFacebook} />
 
             <div className="flex w-full gap-3">
                 <Button type="button" color="secondary" size="lg" className="flex-1" onClick={onClose}>

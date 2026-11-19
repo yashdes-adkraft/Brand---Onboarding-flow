@@ -7,7 +7,6 @@ export interface OnboardingDraft {
     category: string | null;
     oneLiner: string;
     audience: string | null;
-    goals: string[];
     assets: { name: string; size: number; type: string }[];
     /** Social platforms connected on the review step, e.g. "instagram". */
     channels: string[];
@@ -18,7 +17,6 @@ export const initialDraft: OnboardingDraft = {
     category: null,
     oneLiner: "",
     audience: null,
-    goals: [],
     assets: [],
     channels: ["instagram", "facebook", "youtube"],
 };
@@ -58,7 +56,6 @@ export const STEP_ORDER = [
     "website",
     "category",
     "audience",
-    "goals",
     "assets",
     "research",
     "review",

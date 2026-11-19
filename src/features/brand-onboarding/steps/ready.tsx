@@ -45,7 +45,7 @@ const TILES: { left: number; top: number; size: number; icon: string; iconSize: 
 /** The Figma logo crop (fill image scaled inside a square frame). */
 const BrandLogo = ({ className }: { className?: string }) => (
     <span className={cx("relative block shrink-0 overflow-hidden", className)}>
-        <img src={brewbloomLogo} alt="" className="absolute top-[-0.71%] left-[-31.48%] h-[110.38%] w-[168.33%] max-w-none" />
+        <img src={brewbloomLogo} alt="" className="absolute inset-0 size-full max-w-none object-cover" />
     </span>
 );
 
@@ -77,6 +77,8 @@ const ReadyStep = ({ draft, next, back, notify }: StepProps) => {
 
     return (
         <div className="absolute inset-0" style={{ backgroundImage: panelBackground }}>
+            {/* The design is laid out in 1120×712; centre it in the standard 1198×751 modal. Glows may spill past it. */}
+            <div className="absolute top-[19.5px] left-[39px] h-[712px] w-[1120px]">
             {/* Left panel: brand pill orbited by channel tiles — Figma coordinates in the 1120×712 modal. */}
             <div aria-hidden className="pointer-events-none absolute inset-0">
                 <img src={glowBlue} alt="" className="absolute top-[-162px] left-[-241px] size-[610.5px] max-w-none" />
@@ -95,7 +97,7 @@ const ReadyStep = ({ draft, next, back, notify }: StepProps) => {
 
                 <span className="absolute top-[328px] left-[105px] flex items-center gap-3 rounded-full bg-white py-2.5 pr-3 pl-2.5 shadow-[0px_2px_4px_0px_rgba(10,13,26,0.04),0px_12px_24px_-4px_rgba(10,13,26,0.1)]">
                     <BrandLogo className="size-9 rounded-full" />
-                    <span className="text-lg font-semibold whitespace-nowrap text-primary">Brewbloom Coffee</span>
+                    <span className="text-lg font-semibold whitespace-nowrap text-primary">Aftershoot</span>
                 </span>
             </div>
 
@@ -104,9 +106,9 @@ const ReadyStep = ({ draft, next, back, notify }: StepProps) => {
                 <div className="flex w-full flex-col items-start gap-5">
                     <div className="flex w-full flex-col gap-2 whitespace-nowrap">
                         <Heading slot="title" className="text-[30px] leading-[38px] font-semibold tracking-[-0.6px] text-primary">
-                            Brewbloom Coffee is ready
+                            Aftershoot is ready
                         </Heading>
-                        <p className="text-sm text-tertiary">brewbloom.in · Specialty coffee · Bengaluru</p>
+                        <p className="text-sm text-tertiary">aftershoot.com · Apps and software</p>
                     </div>
 
                     <div className="flex w-full flex-col gap-3">
@@ -186,13 +188,14 @@ const ReadyStep = ({ draft, next, back, notify }: StepProps) => {
                     <Button
                         size="lg"
                         onClick={() => {
-                            notify("Brewbloom Coffee added.");
+                            notify("Aftershoot added.");
                             next();
                         }}
                     >
                         Add client
                     </Button>
                 </div>
+            </div>
             </div>
         </div>
     );
@@ -205,6 +208,5 @@ export const readyStep: StepDefinition = {
     phaseFill: 1,
     glow: "none",
     chrome: false,
-    modalClassName: "h-[712px] w-[1120px] rounded-[20px] sm:rounded-[20px]",
-    Component: ReadyStep,
+        Component: ReadyStep,
 };

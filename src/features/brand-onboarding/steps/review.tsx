@@ -11,7 +11,7 @@ import { type ReviewSection, SectionNav } from "../review/section-nav";
 import { type SocialsView, SocialsPanel } from "../review/socials-panel";
 
 /**
- * Figma "Review Brewbloom Coffee" — one screen, four sections:
+ * Figma "Review Aftershoot" — one screen, four sections:
  * Brand (72:4688), Audience (72:4884), Voice (72:5081), Social accounts (Found 72:5274 / Channels 72:5470).
  */
 const ReviewStep = ({ draft, update, next, back }: StepProps) => {

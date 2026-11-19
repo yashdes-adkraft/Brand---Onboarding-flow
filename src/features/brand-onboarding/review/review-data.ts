@@ -6,12 +6,12 @@ import xGray from "@/assets/review/x-gray.svg";
 import x from "@/assets/review/x.svg";
 import youtube from "@/assets/review/youtube.svg";
 
-/** Prototype research results for Brewbloom Coffee (copy from the Figma "Review" frames). */
+/** Prototype research results for Aftershoot (copy from the Figma "Review" frames). */
 export const BRAND = {
-    name: "Brewbloom Coffee",
-    legalName: "Brewbloom Coffee Co.",
-    domain: "brewbloom.in",
-    category: "Cafés and restaurants",
+    name: "Aftershoot",
+    legalName: "Aftershoot Inc.",
+    domain: "aftershoot.com",
+    category: "Apps and software",
     market: "India",
     language: "English",
 };
@@ -32,11 +32,11 @@ export interface SocialAccount {
 }
 
 export const SOCIAL_ACCOUNTS: SocialAccount[] = [
-    { platform: "instagram", platformName: "Instagram", icon: instagram, found: { name: "@brewbloom.coffee", audience: "12.4K followers" }, channelHandle: "@brewbloom.coffee" },
-    { platform: "facebook", platformName: "Facebook", icon: facebook, found: { name: "Brewbloom Coffee", audience: "3.1K followers" }, channelHandle: "Brewbloom Coffee" },
-    { platform: "youtube", platformName: "YouTube", icon: youtube, found: { name: "@brewbloomcoffee", audience: "860 subscribers" }, channelHandle: "@brewbloomcoffee" },
-    { platform: "linkedin", platformName: "LinkedIn", icon: linkedin, found: { name: "Brewbloom Beverages", audience: "540 followers" }, channelHandle: "Brewbloom Beverages" },
-    { platform: "x", platformName: "X", icon: x, iconMuted: xGray, channelHandle: "@brewbloomco" },
+    { platform: "instagram", platformName: "Instagram", icon: instagram, found: { name: "@aftershoot", audience: "12.4K followers" }, channelHandle: "@aftershoot" },
+    { platform: "facebook", platformName: "Facebook", icon: facebook, found: { name: "Aftershoot", audience: "3.1K followers" }, channelHandle: "Aftershoot" },
+    { platform: "youtube", platformName: "YouTube", icon: youtube, found: { name: "@aftershoot", audience: "860 subscribers" }, channelHandle: "@aftershoot" },
+    { platform: "linkedin", platformName: "LinkedIn", icon: linkedin, found: { name: "Aftershoot Technologies", audience: "540 followers" }, channelHandle: "Aftershoot Technologies" },
+    { platform: "x", platformName: "X", icon: x, iconMuted: xGray, channelHandle: "@aftershootai" },
     { platform: "tiktok", platformName: "TikTok", icon: tiktok },
 ];
 

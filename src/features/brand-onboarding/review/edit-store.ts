@@ -41,7 +41,7 @@ export const INITIAL_BRAND: BrandValues = {
     name: BRAND.legalName,
     domain: BRAND.domain,
     logo: DEFAULT_LOGO,
-    colours: ["#6F4E37", "#E9D5B5", "#1F3A2E", "#C8A27A"],
+    colours: ["#307EC4", "#F5F2EB", "#27AD5C", "#EA712F"],
     category: BRAND.category,
     market: BRAND.market,
     language: BRAND.language,
@@ -93,7 +93,7 @@ export function saveSection<S extends EditableSection>(section: S, values: Revie
 
 /** Options for the edit-mode selects and "add" menus (copy from the Figma edit states where shown). */
 export const OPTIONS = {
-    category: ["Beverages", "Food and drink", "Cafés and restaurants", "Packaged food", "Retail"],
+    category: ["Apps and software", "Beverages", "Food and drink", "Cafés and restaurants", "Packaged food", "Retail"],
     market: ["India", "United States", "United Kingdom", "United Arab Emirates", "Singapore"],
     language: ["English", "Hindi", "Marathi", "Kannada", "Tamil"],
     ageFrom: ["18", "22", "25", "30", "35"],
@@ -111,8 +111,8 @@ export const BRAND_LINE_MAX = 120;
 
 /** Figma "Colour tray" (utility-*-500 tokens). */
 export const COLOUR_TRAY = ["#F04438", "#EF6820", "#F79009", "#EAAA08", "#16B364", "#2E90FA", "#6172F3", "#7A5AF8", "#D444F1", "#EE46BC", "#717680", "#181D27"];
-/** Figma "From brewbloom.in" suggestions in the colour picker. */
-export const WEBSITE_COLOURS = ["#C8A27A", "#F6EFE6", "#2B2B2B"];
+/** Figma "From aftershoot.com" suggestions in the colour picker. */
+export const WEBSITE_COLOURS = ["#EA712F", "#F5F2EB", "#2B2B2B"];
 
 export const isValidWebsite = (value: string) => /^([a-z0-9-]+\.)+[a-z]{2,}(\/\S*)?$/i.test(value.trim().replace(/^https?:\/\//i, "").replace(/^www\./i, "www."));
 

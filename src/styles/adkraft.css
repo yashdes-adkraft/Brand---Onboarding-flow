@@ -26,7 +26,9 @@
     --color-focus-ring: #5b8cff;
 
     /* Tokens used in the Figma file that Untitled UI React doesn't ship */
-    --color-bg-active: #fafafa;
+    --color-bg-active: #f5f5f5;
+    /* Tailwind only makes the `bg-active` class from a --background-color-* variable; without this line it was silently missing. */
+    --background-color-active: var(--color-bg-active);
     --color-fg-rail: #94979c; /* Gray (dark mode)/400 — inactive rail icons */
     --color-indicator: #2e90fa; /* utility-blue-500 — active nav indicator */
     --color-adkraft-blue: #5b8cff;
@@ -36,4 +38,72 @@
     --color-status-researched: #22c55e;
     --color-status-researching: #5b8cff;
     --color-status-ready: #a3a3a3;
+}
+
+/* One lap of the beam around a field (BeamLap): the dash travels the whole outline once, fading in and out at the ends.
+   The peak opacity comes from --beam-opacity, because an animation overrides an element's own opacity. */
+@keyframes beam-lap {
+    0% {
+        stroke-dashoffset: 0;
+        opacity: 0;
+    }
+    8% {
+        opacity: var(--beam-opacity, 1);
+    }
+    92% {
+        opacity: var(--beam-opacity, 1);
+    }
+    100% {
+        stroke-dashoffset: -100;
+        opacity: 0;
+    }
+}
+
+/* Rail "Krafty" sparkle (Figma V5/Rail): 2s loop, large star turns clockwise and shrinks 10%, small star turns the other way and grows 15%.
+   Ends a full half-turn from the start (a 4-point star looks identical every 90°) so the loop is seamless. */
+@keyframes krafty-star-lg {
+    0% { transform: rotate(0) scale(1); animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1); }
+    22.5% { transform: rotate(45deg) scale(0.9); animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1); }
+    45% { transform: rotate(90deg) scale(1); }
+    70% { transform: rotate(90deg) scale(1); animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1); }
+    92.5% { transform: rotate(135deg) scale(0.9); animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1); }
+    100% { transform: rotate(180deg) scale(1); }
+}
+@keyframes krafty-star-sm {
+    0% { transform: rotate(0) scale(1); animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1); }
+    22.5% { transform: rotate(-45deg) scale(1.15); animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1); }
+    45% { transform: rotate(-90deg) scale(1); }
+    70% { transform: rotate(-90deg) scale(1); animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1); }
+    92.5% { transform: rotate(-135deg) scale(1.15); animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1); }
+    100% { transform: rotate(-180deg) scale(1); }
+}
+.group:is(:hover, :focus-visible) .krafty-star-lg { animation: krafty-star-lg 2s linear infinite; }
+.group:is(:hover, :focus-visible) .krafty-star-sm { animation: krafty-star-sm 2s linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+    .krafty-star-lg, .krafty-star-sm { animation: none !important; }
+}
+
+/* Add-ambassador modal header: the blurred waves drift slowly in opposite directions. */
+@keyframes amb-drift-a {
+    from { transform: translate(-14px, 4px); }
+    to { transform: translate(18px, -8px); }
+}
+@keyframes amb-drift-b {
+    from { transform: translate(16px, -4px); }
+    to { transform: translate(-20px, 8px); }
+}
+.amb-drift-a { animation: amb-drift-a 9s ease-in-out infinite alternate; }
+.amb-drift-b { animation: amb-drift-b 11s ease-in-out infinite alternate; }
+@media (prefers-reduced-motion: reduce) {
+    .amb-drift-a, .amb-drift-b { animation: none; }
+}
+
+/* Logos floating over the connect-channel modal's banner: a slow bob, each out of step with the next. */
+@keyframes amb-float {
+    from { transform: translateY(-5px); }
+    to { transform: translateY(6px); }
+}
+.amb-float { animation: amb-float 5s ease-in-out infinite alternate; }
+@media (prefers-reduced-motion: reduce) {
+    .amb-float { animation: none; }
 }

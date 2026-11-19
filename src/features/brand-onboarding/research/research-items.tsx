@@ -1,6 +1,10 @@
 import type { FC, SVGProps } from "react";
-import { Camera03, File06, Flag05, Globe02, Image03, Palette, TrendUp01, Users01 } from "@untitledui/icons";
+import { Camera03, File06, Flag05, Globe02, Image03, TrendUp01, Users01 } from "@untitledui/icons";
+import logo from "@/assets/research/brewbloom-logo.png";
 import { AssetsGraphic, AudienceGraphic, BrandKitGraphic, BriefGraphic, CompetitorsGraphic, SocialsGraphic } from "./graphics";
+
+/** The brand kit row's icon is the brand's own logo mark. */
+const LogoIcon: FC<SVGProps<SVGSVGElement>> = ({ className }) => <img src={logo} alt="" className={`${className ?? ""} rounded-[5px] object-cover`} />;
 
 export interface ResearchItem {
     id: string;
@@ -22,8 +26,8 @@ export interface ResearchItem {
  */
 export const RESEARCH_ITEMS: ResearchItem[] = [
     { id: "website", title: "Website", icon: Globe02 },
-    { id: "brand-kit", title: "Brand kit", icon: Palette, handle: "brewbloom.in", verb: "creating", detail: "Brand kit", Graphic: BrandKitGraphic },
-    { id: "socials", title: "Socials", icon: Camera03, handle: "@brewbloom.coffee", verb: "finding", detail: "Social accounts", Graphic: SocialsGraphic },
+    { id: "brand-kit", title: "Brand kit", icon: LogoIcon, handle: "aftershoot.com", verb: "creating", detail: "Brand kit", Graphic: BrandKitGraphic },
+    { id: "socials", title: "Socials", icon: Camera03, handle: "@aftershoot", verb: "finding", detail: "Social accounts", Graphic: SocialsGraphic },
     { id: "audience", title: "Audience", icon: Users01, handle: "India", verb: "searching", detail: "Audience", Graphic: AudienceGraphic },
     { id: "assets", title: "Assets", icon: Image03, handle: "24 found", verb: "finding", detail: "Assets", Graphic: AssetsGraphic },
     { id: "brief", title: "Brief", icon: File06, handle: "Draft 1", verb: "writing", detail: "Brief", Graphic: BriefGraphic },

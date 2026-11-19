@@ -3,8 +3,13 @@ import { Dialog, DialogTrigger, Popover } from "react-aria-components";
 import { Button } from "@/components/base/buttons/button";
 import { Input } from "@/components/base/input/input";
 import { Select } from "@/components/base/select/select";
-import type { SocialPlatform } from "./review-data";
+import { type SocialPlatform, accountFor } from "./review-data";
 import { PLATFORM_OPTIONS } from "./socials-data";
+
+/** One stable icon component per platform (the Select and Input take component references, not elements). */
+const PLATFORM_ICONS = Object.fromEntries(
+    PLATFORM_OPTIONS.map(({ id }) => [id, ({ className }: { className?: string }) => <img src={accountFor(id).icon} alt="" className={className} />]),
+) as Record<SocialPlatform, (props: { className?: string }) => ReactNode>;
 
 interface AddHandlePopoverProps {
     /** The pressable trigger (Untitled UI Button). */
@@ -55,13 +60,14 @@ export const AddHandlePopover = ({ children, defaultPlatform, defaultHandle = ""
                         <Select
                             label="Platform"
                             size="lg"
+                            icon={PLATFORM_ICONS[platform]}
                             items={PLATFORM_OPTIONS}
                             selectedKey={platform}
                             onSelectionChange={(key) => key && setPlatform(key as SocialPlatform)}
                         >
-                            {(item) => <Select.Item id={item.id} label={item.label} />}
+                            {(item) => <Select.Item id={item.id} label={item.label} icon={PLATFORM_ICONS[item.id as SocialPlatform]} />}
                         </Select>
-                        <Input label="Handle" size="lg" value={handle} onChange={setHandle} autoFocus />
+                        <Input label="Handle" size="lg" icon={PLATFORM_ICONS[platform]} value={handle} onChange={setHandle} autoFocus />
                         <div className="flex justify-end gap-2">
                             <Button color="secondary" size="sm" onClick={() => setOpen(false)}>
                                 Cancel

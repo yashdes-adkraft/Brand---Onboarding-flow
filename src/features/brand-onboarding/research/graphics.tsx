@@ -113,15 +113,15 @@ export const BrandKitGraphic = () => (
             style={{
                 left: 10,
                 top: 62,
-                backgroundImage: "linear-gradient(90deg, #3b2a20 0%, #c8865a 33.333%, #f3e6d3 66.667%, #2f5d50 100%)",
+                backgroundImage: "linear-gradient(90deg, #307ec4 0%, #ea712f 33.333%, #f5f2eb 66.667%, #27ad5c 100%)",
             }}
         />
         <Pop i={1} className="h-[42px] w-9 rounded-xl border-2 border-white drop-shadow-[0px_2px_3px_rgba(0,0,0,0.18)]" style={{ left: 64, top: 57 }} />
         <Pop i={2} className={cx("rounded-lg border border-secondary bg-white px-2.5 py-[5px]", chipShadow)} style={{ left: 50, top: 18 }}>
-            <p className={chipText}>#C8865A</p>
+            <p className={chipText}>#EA712F</p>
         </Pop>
         <Pop i={3} className="flex gap-2" style={{ left: 10, top: 118 }}>
-            {["#3b2a20", "#c8865a", "#f3e6d3", "#2f5d50"].map((color, idx) => (
+            {["#307ec4", "#ea712f", "#f5f2eb", "#27ad5c"].map((color, idx) => (
                 <span key={color} className="relative size-8">
                     <span className="absolute inset-0 rounded-[9px] border border-black/8" style={{ backgroundColor: color }} />
                     {idx === 1 && <span className="absolute -top-1 -left-1 size-10 rounded-xl border-[1.5px] border-[#181d27]" />}
@@ -135,7 +135,7 @@ export const BrandKitGraphic = () => (
         <Pop i={4} className="size-11" style={{ left: 159.48, top: 6.41, rotate: -4 }}>
             <div className={cx("absolute inset-0 rounded-xl border border-secondary bg-white", chipShadow)}>
                 <div className="absolute top-[5px] left-[5px] size-8 overflow-hidden rounded-lg">
-                    <img src={logo} alt="" className="absolute top-[-1.7%] left-[-35.16%] h-[113.24%] w-[172.7%] max-w-none" />
+                    <img src={logo} alt="" className="absolute inset-0 size-full max-w-none object-cover" />
                 </div>
             </div>
             <Found left={33} top={-4} />
@@ -153,7 +153,7 @@ export const BrandKitGraphic = () => (
                 className="text-[92px] leading-[100px] font-semibold whitespace-nowrap text-[#181d27]"
                 style={{ fontFamily: "Fraunces, serif", fontVariationSettings: '"SOFT" 0, "WONK" 1' }}
             >
-                A<span className="text-[#c8865a]">a</span>
+                A<span className="text-[#ea712f]">a</span>
             </p>
         </Pop>
         <Pop i={7} className="h-[3px] w-[34px] rounded-[2px] bg-linear-to-r from-adkraft-blue via-adkraft-mauve to-adkraft-pink" style={{ left: 258, top: 150 }} />
@@ -204,7 +204,7 @@ export const SocialsGraphic = () => {
             <Pop i={3} className="size-14" style={{ left: 191, top: 75 }}>
                 <Img src={clientEllipse} className="top-[-4px] left-[-8px] size-[72px]" />
                 <div className="absolute top-[12px] left-[12px] size-8 overflow-hidden rounded-full">
-                    <img src={logo} alt="" className="absolute top-[-1.7%] left-[-35.16%] h-[113.24%] w-[172.7%] max-w-none" />
+                    <img src={logo} alt="" className="absolute inset-0 size-full max-w-none object-cover" />
                 </div>
             </Pop>
             <SocialTile i={4} left={118} top={40} tile={tileFb} />
@@ -342,7 +342,7 @@ export const BriefGraphic = () => {
                 <div className="absolute top-[13px] left-[13px] flex flex-col items-start gap-2">
                     <div className="flex items-center gap-1.5">
                         <img src={logo} alt="" className="size-[18px] rounded-[5px] object-cover" />
-                        <p className="text-xs font-semibold text-primary">Brewbloom</p>
+                        <p className="text-xs font-semibold text-primary">Aftershoot</p>
                     </div>
                     <p className="w-[148px] text-[11px] leading-[17px] text-secondary">Café-quality cold brew at home.</p>
                     <div className="flex items-center gap-0.5">

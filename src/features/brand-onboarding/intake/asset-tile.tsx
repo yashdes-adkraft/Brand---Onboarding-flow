@@ -52,7 +52,7 @@ const Thumb = ({ name, type, preview, duration, monogram }: AssetTileProps) => {
         // Figma 66:4330 — monogram stand-in for the client's logo file.
         return (
             <div className="flex size-full items-center justify-center bg-[#f9f4ec]">
-                <div className="flex size-10 items-center justify-center rounded-[10px] bg-[#1f3a2e] text-xl font-semibold text-[#f9f4ec]">
+                <div className="flex size-10 items-center justify-center rounded-[10px] bg-[#307ec4] text-xl font-semibold text-[#f5f2eb]">
                     {(monogram || name).charAt(0).toUpperCase()}
                 </div>
             </div>
