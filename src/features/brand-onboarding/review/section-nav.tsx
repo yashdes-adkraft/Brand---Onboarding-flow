@@ -3,7 +3,7 @@ import { Announcement01, Building07, Users01 } from "@untitledui/icons";
 import { Tab as AriaTab } from "react-aria-components";
 import { TabList } from "@/components/application/tabs/tabs";
 import { Badge } from "@/components/base/badges/badges";
-import instagram from "@/assets/review/instagram.svg";
+import { Instagram } from "@/components/foundations/social-icons";
 import { cx } from "@/utils/cx";
 
 export type ReviewSection = "brand" | "audience" | "voice" | "socials";
@@ -18,7 +18,7 @@ const ITEMS: NavItem[] = [
     { id: "brand", label: "Brand", icon: Building07 },
     { id: "audience", label: "Audience", icon: Users01 },
     { id: "voice", label: "Voice", icon: Announcement01 },
-    { id: "socials", label: "Social accounts", icon: ({ className }) => <img src={instagram} alt="" className={className} /> },
+    { id: "socials", label: "Social accounts", icon: (props) => <Instagram size={20} {...props} /> },
 ];
 
 interface SectionNavProps {
