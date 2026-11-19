@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import { ChevronLeft } from "@untitledui/icons";
 import { Dialog, Modal, ModalOverlay } from "@/components/application/modals/modal";
 import { Button } from "@/components/base/buttons/button";
@@ -38,6 +38,25 @@ export interface OnboardingModalProps {
     children: ReactNode;
     className?: string;
 }
+
+const MODAL_W = 1198;
+const MODAL_H = 751;
+
+/**
+ * The onboarding screens are laid out at a fixed 1198×751. On a smaller window (a laptop at 100% zoom, a short browser
+ * window) the modal would be cut off and the bottom buttons, such as "Confirm brand", would be out of reach. This works
+ * out how much to shrink the whole modal so it always fits, with a little room around it; it never scales up.
+ */
+const useFitScale = (margin = 24) => {
+    const fit = () => Math.min(1, (window.innerWidth - margin * 2) / MODAL_W, (window.innerHeight - margin * 2) / MODAL_H);
+    const [scale, setScale] = useState(fit);
+    useEffect(() => {
+        const onResize = () => setScale(fit());
+        window.addEventListener("resize", onResize);
+        return () => window.removeEventListener("resize", onResize);
+    }, []);
+    return scale;
+};
 
 /** The glow, top fade and header (back link, progress, save button) that every step shares — inside the modal, or inside a wave view. */
 export const ModalFrame = ({
@@ -105,7 +124,9 @@ export const OnboardingModal = ({
     onSaveAndExit,
     children,
     className,
-}: OnboardingModalProps) => (
+}: OnboardingModalProps) => {
+    const scale = useFitScale();
+    return (
     <ModalOverlay
         isOpen={isOpen}
         onOpenChange={onOpenChange}
@@ -113,7 +134,7 @@ export const OnboardingModal = ({
         // Figma: bg-overlay @ 70%, background blur 16 (= CSS blur 8px)
         className="backdrop-blur-[8px] sm:items-center"
     >
-        <Modal className={cx("h-[751px] w-[1198px] max-w-full overflow-clip rounded-2xl shadow-none sm:mt-px sm:rounded-2xl", modalClassName)}>
+        <Modal style={scale < 1 ? { scale } : undefined} className={cx("h-[751px] max-h-none w-[1198px] max-w-none shrink-0 overflow-clip rounded-2xl shadow-none sm:mt-px sm:rounded-2xl", modalClassName)}>
             <Dialog aria-label={ariaLabel} className={cx("relative h-full overflow-clip", className)}>
                 <ModalFrame
                     phase={phase}
@@ -131,4 +152,5 @@ export const OnboardingModal = ({
             </Dialog>
         </Modal>
     </ModalOverlay>
-);
+    );
+};
