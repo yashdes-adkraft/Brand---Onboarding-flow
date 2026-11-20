@@ -6,6 +6,7 @@ import { Dialog, Modal, ModalOverlay } from "@/components/application/modals/mod
 import { Badge } from "@/components/base/badges/badges";
 import { Button } from "@/components/base/buttons/button";
 import { CloseButton } from "@/components/base/buttons/close-button";
+import { Input } from "@/components/base/input/input";
 import { Select } from "@/components/base/select/select";
 import { Tag, TagGroup, TagList } from "@/components/base/tags/tags";
 import { FeaturedIcon } from "@/components/foundations/featured-icon/featured-icon";
@@ -62,30 +63,100 @@ export const FormRow = ({ label, field, children, labelPad = "pt-3", id }: { lab
     </div>
 );
 
-/** Untitled `Select` (lg = 44px) for a string option list. */
+const OTHER = "__other__";
+
+/**
+ * Untitled `Select` (lg = 44px) for a string option list. With `allowOther` the list ends in "Other…": choosing it opens
+ * a text field with Cancel / Add, and the typed value becomes the selection (and shows in the list from then on).
+ */
 export const OptionSelect = ({
     label,
     value,
     options,
     onChange,
     className,
+    allowOther,
+    placeholder,
 }: {
     label: string;
     value: string;
     options: readonly string[];
     onChange: (value: string) => void;
     className?: string;
+    allowOther?: boolean;
+    placeholder?: string;
+}) => {
+    const [other, setOther] = useState(false);
+    const [text, setText] = useState("");
+    const custom = allowOther && value && !options.includes(value) ? [value] : [];
+    const items = [...options, ...custom].map((o) => ({ id: o, label: o }));
+    if (allowOther) items.push({ id: OTHER, label: "Other…" });
+
+    const add = () => {
+        if (!text.trim()) return;
+        onChange(text.trim());
+        setText("");
+        setOther(false);
+    };
+
+    return (
+        <div className={cx("flex flex-col gap-3", className)}>
+            <Select
+                aria-label={label}
+                size="lg"
+                placeholder={placeholder}
+                selectedKey={value || null}
+                onSelectionChange={(key) => {
+                    if (key === OTHER) return setOther(true);
+                    if (key != null) {
+                        setOther(false);
+                        onChange(String(key));
+                    }
+                }}
+                items={items}
+            >
+                {(item) => <Select.Item id={item.id} label={item.label} />}
+            </Select>
+            {other && (
+                <FieldAdd label={`Your ${label.toLowerCase()}`} placeholder={`Type your ${label.toLowerCase()}`} value={text} onChange={setText} onCancel={() => { setOther(false); setText(""); }} onAdd={add} />
+            )}
+        </div>
+    );
+};
+
+/** One input with Cancel and Add beside it: the same shape wherever the user types something to add. */
+export const FieldAdd = ({
+    label,
+    placeholder,
+    value,
+    onChange,
+    onCancel,
+    onAdd,
+    addLabel = "Add",
+}: {
+    label: string;
+    placeholder?: string;
+    value: string;
+    onChange: (value: string) => void;
+    onCancel: () => void;
+    onAdd: () => void;
+    addLabel?: string;
 }) => (
-    <Select
-        aria-label={label}
-        size="lg"
-        className={className}
-        selectedKey={value}
-        onSelectionChange={(key) => key != null && onChange(String(key))}
-        items={options.map((o) => ({ id: o, label: o }))}
+    <form
+        className="flex w-full items-start gap-3"
+        onSubmit={(e) => {
+            e.preventDefault();
+            onAdd();
+        }}
     >
-        {(item) => <Select.Item id={item.id} label={item.label} />}
-    </Select>
+        <Input aria-label={label} size="lg" autoFocus className="flex-1" placeholder={placeholder} value={value} onChange={onChange} onKeyDown={(e) => e.key === "Escape" && onCancel()} />
+        <Button type="button" color="secondary" size="lg" onClick={onCancel}>
+            Cancel
+        </Button>
+        <Button type="submit" size="lg" isDisabled={!value.trim()}>
+            {addLabel}
+        </Button>
+    </form>
 );
 
 interface TagListEditorProps {
@@ -159,25 +230,35 @@ export const TagListEditor = ({ label, values, onChange, suggestions, placeholde
                     }}
                     className={cx(isInvalid && "[&_[role=group]]:ring-error_subtle [&_[role=group]:focus-within]:ring-2 [&_[role=group]:focus-within]:ring-error")}
                 >
-                    <Select.ComboBox
-                        aria-label={label}
-                        placeholder={placeholder}
-                        size="lg"
-                        shortcut={false}
-                        icon={<></>}
-                        allowsCustomValue
-                        defaultFilter={() => true}
-                        autoFocus={isAdding}
-                        isInvalid={isInvalid}
-                        hint={isInvalid ? errorMessage : undefined}
-                        inputValue={text}
-                        onInputChange={setText}
-                        selectedKey={null}
-                        onSelectionChange={(key) => key != null && add(String(key))}
-                        items={available.map((s) => ({ id: s, label: s }))}
-                    >
-                        {(item) => <Select.Item id={item.id} label={item.label} selectionIndicator="none" />}
-                    </Select.ComboBox>
+                    <div className="flex w-full items-start gap-3">
+                        <div className="min-w-0 flex-1">
+                            <Select.ComboBox
+                            aria-label={label}
+                            placeholder={placeholder}
+                            size="lg"
+                            shortcut={false}
+                            icon={<></>}
+                            allowsCustomValue
+                            defaultFilter={() => true}
+                            autoFocus={isAdding}
+                            isInvalid={isInvalid}
+                            hint={isInvalid ? errorMessage : undefined}
+                            inputValue={text}
+                            onInputChange={setText}
+                            selectedKey={null}
+                            onSelectionChange={(key) => key != null && add(String(key))}
+                            items={available.map((s) => ({ id: s, label: s }))}
+                        >
+                            {(item) => <Select.Item id={item.id} label={item.label} selectionIndicator="none" />}
+                        </Select.ComboBox>
+                        </div>
+                        <Button type="button" color="secondary" size="lg" onClick={() => { setText(""); if (values.length > 0) setIsAdding(false); }}>
+                            Cancel
+                        </Button>
+                        <Button type="button" size="lg" isDisabled={!text.trim()} onClick={() => add(text)}>
+                            Add
+                        </Button>
+                    </div>
                 </div>
             )}
         </div>

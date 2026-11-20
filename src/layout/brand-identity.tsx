@@ -12,6 +12,7 @@ import { cx } from "@/utils/cx";
 import {
     type BrandColour,
     DEFAULT_COLOURS,
+    coloursFor,
     DEFAULT_DONTS,
     DEFAULT_DOS,
     DEFAULT_GUARDRAILS,
@@ -80,6 +81,8 @@ interface BrandIdentityProps {
     brandName: string;
     domain: string;
     logo: string;
+    /** Colours entered by hand for this brand, if any. */
+    brandColours?: string[];
     tab: IdentityTab;
     onTab: (tab: IdentityTab) => void;
     notify: (message: string) => void;
@@ -94,12 +97,12 @@ type DraftStatus = "Done" | "Writing…" | "Queued" | "Kept";
  * "edited" so Re-draft identity can leave it alone. Re-draft opens a picker, then rewrites the chosen sections one at a
  * time (a progress card and a status on each tab, with Stop), simulated here.
  */
-export const BrandIdentity = ({ brandName, domain, logo, tab, onTab, notify }: BrandIdentityProps) => {
+export const BrandIdentity = ({ brandName, domain, logo, brandColours, tab, onTab, notify }: BrandIdentityProps) => {
     const [profiles, setProfiles] = useState<Profile[]>(foundProfiles);
     const [voice, setVoice] = useState(DEFAULT_VOICE);
     const [draft, setDraft] = useState(DEFAULT_VOICE);
     const [keywords, setKeywords] = useState(DEFAULT_KEYWORDS);
-    const [colours, setColours] = useState<BrandColour[]>(DEFAULT_COLOURS);
+    const [colours, setColours] = useState<BrandColour[]>(() => coloursFor(brandColours));
     const [dos, setDos] = useState(DEFAULT_DOS);
     const [donts, setDonts] = useState(DEFAULT_DONTS);
     const [motifs, setMotifs] = useState<Motif[]>(DEFAULT_MOTIFS);
@@ -126,7 +129,7 @@ export const BrandIdentity = ({ brandName, domain, logo, tab, onTab, notify }: B
                 setDraft(DEFAULT_VOICE);
                 setKeywords(DEFAULT_KEYWORDS);
             }
-            if (finished.includes("palette")) setColours(DEFAULT_COLOURS);
+            if (finished.includes("palette")) setColours(coloursFor(brandColours));
             if (finished.includes("dos")) {
                 setDos(DEFAULT_DOS);
                 setDonts(DEFAULT_DONTS);
@@ -224,7 +227,7 @@ export const BrandIdentity = ({ brandName, domain, logo, tab, onTab, notify }: B
                     <Globe02 aria-hidden className="size-5" />
                 </span>
                 <div className="flex min-w-0 flex-1 flex-col">
-                    <span className="truncate text-sm font-semibold text-primary">{domain}</span>
+                    <span className="truncate text-sm font-semibold text-primary">{domain || "No website added"}</span>
                     <span className="truncate text-xs text-tertiary">Read just now · 14 pages · product pages and About us</span>
                 </div>
                 <BadgeWithDot color="success" size="sm">

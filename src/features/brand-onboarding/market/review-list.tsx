@@ -1,7 +1,7 @@
 import type { ReactNode, Ref } from "react";
 import { useState } from "react";
-import { Edit02, Plus } from "@untitledui/icons";
-import { Checkbox as AriaCheckbox, Heading } from "react-aria-components";
+import { Edit02, InfoCircle, Plus } from "@untitledui/icons";
+import { Checkbox as AriaCheckbox, Dialog, DialogTrigger, Heading, Popover } from "react-aria-components";
 import { Button } from "@/components/base/buttons/button";
 import { ButtonUtility } from "@/components/base/buttons/button-utility";
 import { CheckboxBase } from "@/components/base/checkbox/checkbox";
@@ -88,6 +88,8 @@ const RowCheckbox = ({
 
 interface ReviewScreenProps {
     title: string;
+    /** One or two plain sentences under the title: what this screen is and what to do. */
+    description?: string;
     listLabel: string;
     addLabel: string;
     addPlaceholder: string;
@@ -105,6 +107,7 @@ interface ReviewScreenProps {
 /** Shared body of the competitors / trends review screens (Figma Body at 279,142 in the modal). */
 export const ReviewScreen = ({
     title,
+    description,
     listLabel,
     addLabel,
     addPlaceholder,
@@ -128,9 +131,22 @@ export const ReviewScreen = ({
 
     return (
         <div className="absolute top-[142px] left-1/2 flex w-160 -translate-x-1/2 flex-col items-center gap-8">
-            <Heading slot="title" className="text-[30px] leading-[38px] font-medium whitespace-nowrap text-primary">
-                {title}
-            </Heading>
+            <div className="flex items-center gap-2">
+                <Heading slot="title" className="text-[30px] leading-[38px] font-medium whitespace-nowrap text-primary">
+                    {title}
+                </Heading>
+                {/* The explanation sits behind an info button, so the heading stays clean like the other screens. */}
+                {description && (
+                    <DialogTrigger>
+                        <ButtonUtility color="tertiary" size="sm" icon={InfoCircle} aria-label={`About: ${title}`} />
+                        <Popover placement="bottom" offset={8} className="w-80 rounded-xl border border-secondary bg-primary p-4 text-sm text-secondary shadow-lg outline-hidden entering:duration-150 entering:animate-in entering:fade-in entering:zoom-in-95 exiting:duration-100 exiting:animate-out exiting:fade-out">
+                            <Dialog aria-label={title} className="outline-hidden">
+                                {description}
+                            </Dialog>
+                        </Popover>
+                    </DialogTrigger>
+                )}
+            </div>
 
             <div className="flex w-full flex-col items-start gap-3">
                 <div
@@ -152,6 +168,7 @@ export const ReviewScreen = ({
                     >
                         <Input
                             autoFocus
+                            size="lg"
                             aria-label={addLabel}
                             placeholder={addPlaceholder}
                             value={value}
@@ -159,10 +176,10 @@ export const ReviewScreen = ({
                             className="flex-1"
                             onKeyDown={(e) => e.key === "Escape" && setAdding(false)}
                         />
-                        <Button type="button" color="secondary" size="md" onClick={() => setAdding(false)}>
+                        <Button type="button" color="secondary" size="lg" onClick={() => { setAdding(false); setValue(""); }}>
                             Cancel
                         </Button>
-                        <Button type="submit" size="md" isDisabled={!value.trim()}>
+                        <Button type="submit" size="lg" isDisabled={!value.trim()}>
                             Add
                         </Button>
                     </form>

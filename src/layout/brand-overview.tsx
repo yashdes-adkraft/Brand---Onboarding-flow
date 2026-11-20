@@ -183,7 +183,7 @@ export const BrandOverview = ({ brand, onBrands, notify }: BrandOverviewProps) =
 
                 <main className="flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto px-8 pt-7 pb-8">
                     {section === "identity" ? (
-                        <BrandIdentity brandName={brand.name} domain={brand.domain} logo={brand.logo} tab={identityTab} onTab={setIdentityTab} notify={notify} />
+                        <BrandIdentity brandName={brand.name} domain={brand.domain} logo={brand.logo} brandColours={brand.colours} tab={identityTab} onTab={setIdentityTab} notify={notify} />
                     ) : section === "channels" ? (
                         <BrandChannels brandName={brand.name} channels={channels} onChannels={saveChannels} onSkip={() => setSection("overview")} notify={notify} />
                     ) : section === "ambassadors" ? (

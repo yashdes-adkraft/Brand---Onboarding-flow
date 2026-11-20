@@ -32,6 +32,11 @@ export const DEFAULT_COLOURS: BrandColour[] = [
     { id: "cream", name: "Album cream", hex: "#F5F2EB", role: "Background" },
 ];
 
+const ROLES: ColourRole[] = ["Primary", "Secondary", "Accent", "Background"];
+/** The brand's palette: colours typed in by hand when there are any, otherwise the Aftershoot logo colours. */
+export const coloursFor = (hex?: string[]): BrandColour[] =>
+    hex?.length ? hex.map((h, i) => ({ id: `c${i}`, name: `Colour ${i + 1}`, hex: h.toUpperCase(), role: ROLES[i] ?? "Accent" })) : DEFAULT_COLOURS;
+
 export const DEFAULT_DOS = ["Show the before and after side by side", "Lead with the hours saved", "Use real wedding and portrait work", "Keep captions under ten words"];
 export const DEFAULT_DONTS = ["No jargon about models", "No “magic” claims", "No stock photos of cameras", "No generic festival greetings"];
 

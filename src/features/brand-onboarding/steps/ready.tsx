@@ -95,7 +95,8 @@ const ReadyStep = ({ draft, next, back, notify }: StepProps) => {
                     </span>
                 ))}
 
-                <span className="absolute top-[328px] left-[105px] flex items-center gap-3 rounded-full bg-white py-2.5 pr-3 pl-2.5 shadow-[0px_2px_4px_0px_rgba(10,13,26,0.04),0px_12px_24px_-4px_rgba(10,13,26,0.1)]">
+                {/* Centred on the middle of the orbit (x 221.5, y 363.4), so the pill sits level with the channel tiles around it */}
+                <span className="absolute top-[363.4px] left-[221.5px] flex -translate-x-1/2 -translate-y-1/2 items-center gap-3 rounded-full bg-white py-2.5 pr-3 pl-2.5 shadow-[0px_2px_4px_0px_rgba(10,13,26,0.04),0px_12px_24px_-4px_rgba(10,13,26,0.1)]">
                     <BrandLogo className="size-9 rounded-full" />
                     <span className="text-lg font-semibold whitespace-nowrap text-primary">Aftershoot</span>
                 </span>

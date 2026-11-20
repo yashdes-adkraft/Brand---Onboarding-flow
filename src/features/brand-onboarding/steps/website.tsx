@@ -25,7 +25,7 @@ const CREDITS_COST = 40;
 const CREDITS_BALANCE = 2000;
 
 /** Figma "Onboarding 1" (66:2225) — step 1, the client's website. */
-const WebsiteStep = ({ draft, update, next, notify }: StepProps) => {
+const WebsiteStep = ({ draft, update, next, goTo }: StepProps) => {
     const [url, setUrl] = useState(draft.website);
     const [error, setError] = useState<string>();
     const [isSubmitting, setSubmitting] = useState(false);
@@ -133,7 +133,7 @@ const WebsiteStep = ({ draft, update, next, notify }: StepProps) => {
                 </div>
 
                 {/* Figma: link button, text-quaternary, always underlined */}
-                <Button color="link-gray" size="sm" onClick={() => notify("Manual setup isn’t in this prototype yet.")} className="text-quaternary *:data-text:decoration-current hover:text-tertiary">
+                <Button color="link-gray" size="sm" onClick={() => goTo("manual")} className="text-quaternary *:data-text:decoration-current hover:text-tertiary">
                     Set up manually
                 </Button>
             </div>

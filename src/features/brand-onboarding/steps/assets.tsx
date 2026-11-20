@@ -54,6 +54,14 @@ const AssetsStep = ({ draft, update, next, back, notify }: StepProps) => {
             });
     };
 
+    const removeAsset = (name: string) => {
+        update({ assets: assets.filter((a) => a.name !== name) });
+        const drop = <T,>(rec: Record<string, T>) => Object.fromEntries(Object.entries(rec).filter(([k]) => k !== name));
+        setProgress(drop);
+        setPreviews(drop);
+        setDurations(drop);
+    };
+
     const done = assets.filter((a) => (progress[a.name] ?? 100) >= 100);
     const totalSize = formatSize(done.reduce((sum, a) => sum + a.size, 0));
     const countOf = (id: string) => (id === "all" ? assets.length : assets.filter((a) => kindOf(a) === id).length);
@@ -105,7 +113,7 @@ const AssetsStep = ({ draft, update, next, back, notify }: StepProps) => {
                                             .filter((a) => f.id === "all" || kindOf(a) === f.id)
                                             .map((a) => (
                                                 <AssetTile key={a.name} {...a} progress={progress[a.name]} preview={previews[a.name]} duration={durations[a.name]}
-                                                    monogram={draft.website}
+                                                    monogram={draft.website} onRemove={() => removeAsset(a.name)}
                                                 />
                                             ))}
                                         <li className="flex">

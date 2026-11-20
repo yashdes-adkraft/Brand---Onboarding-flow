@@ -10,6 +10,20 @@ export interface OnboardingDraft {
     assets: { name: string; size: number; type: string }[];
     /** Social platforms connected on the review step, e.g. "instagram". */
     channels: string[];
+    /** What the user typed on the manual setup screen (the path that skips the website). */
+    manual: ManualBrand;
+}
+
+export interface ManualBrand {
+    name: string;
+    website: string;
+    /** Logo as a data URL, so it survives a reload. */
+    logo: string | null;
+    /** #RRGGBB */
+    colours: string[];
+    category: string;
+    market: string;
+    language: string;
 }
 
 export const initialDraft: OnboardingDraft = {
@@ -19,6 +33,7 @@ export const initialDraft: OnboardingDraft = {
     audience: null,
     assets: [],
     channels: ["instagram", "facebook", "youtube"],
+    manual: { name: "", website: "", logo: null, colours: [], category: "", market: "", language: "" },
 };
 
 export interface StepProps {
@@ -29,6 +44,8 @@ export interface StepProps {
     /** Go to the previous step in STEP_ORDER. */
     back: () => void;
     goTo: (id: StepId) => void;
+    /** Manual setup only: create the brand from what was entered, skipping research. */
+    createBrand: () => void;
     /** Show a transient toast (prototype-only feedback for unbuilt actions). */
     notify: (message: string) => void;
 }
@@ -64,4 +81,5 @@ export const STEP_ORDER = [
     "ready",
 ] as const;
 
-export type StepId = (typeof STEP_ORDER)[number];
+/** "manual" is the separate set-up-by-hand screen; it is not in STEP_ORDER because it has no next or back in the research path. */
+export type StepId = (typeof STEP_ORDER)[number] | "manual";

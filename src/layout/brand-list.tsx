@@ -3,7 +3,7 @@ import { Avatar } from "@/components/base/avatar/avatar";
 import { BadgeWithDot } from "@/components/base/badges/badges";
 import { Dropdown } from "@/components/base/dropdown/dropdown";
 import { cx } from "@/utils/cx";
-import { type Brand, timeAgo } from "./brand-card";
+import { type Brand, STATUS_COLOR, STATUS_LABEL, openLabel, subline, timeAgo } from "./brand-card";
 
 /** Column template shared by the header and every row: Brand · Status · Updated · menu. */
 /** Container queries: a narrow table drops "Updated", so the brand name never gets squeezed. */
@@ -38,7 +38,6 @@ export const BrandList = ({ brands, onOpen, onDelete, onNewBrand, showAdd = true
         </div>
 
         {brands.map((b) => {
-            const researching = b.status === "researching";
             return (
                 <div
                     key={b.id}
@@ -53,15 +52,13 @@ export const BrandList = ({ brands, onOpen, onDelete, onNewBrand, showAdd = true
                                     {b.name}
                                 </button>
                             </span>
-                            <span className="truncate text-xs text-tertiary">
-                                {b.category} · {b.domain}
-                            </span>
+                            <span className="truncate text-xs text-tertiary">{subline(b)}</span>
                         </div>
                     </div>
 
                     <div role="cell">
-                        <BadgeWithDot color={researching ? "brand" : "success"} size="sm">
-                            {researching ? "Researching" : "Researched"}
+                        <BadgeWithDot color={STATUS_COLOR[b.status]} size="sm">
+                            {STATUS_LABEL[b.status]}
                         </BadgeWithDot>
                     </div>
 
@@ -76,7 +73,7 @@ export const BrandList = ({ brands, onOpen, onDelete, onNewBrand, showAdd = true
                             <Dropdown.Popover className="w-44">
                                 <Dropdown.Menu>
                                     <Dropdown.Item icon={ArrowUpRight} onAction={() => onOpen(b)}>
-                                        {researching ? "View progress" : "View overview"}
+                                        {openLabel(b)}
                                     </Dropdown.Item>
                                     <Dropdown.Separator />
                                     <Dropdown.Item icon={Trash01} onAction={() => onDelete(b)}>

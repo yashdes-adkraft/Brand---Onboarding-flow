@@ -18,10 +18,11 @@ const TrendsStep = ({ next, back }: StepProps) => {
 
     return (
         <ReviewScreen
-            title="Which trends should they ride?"
+            title="Pick trends to build ads around"
+            description="These are topics people are talking about in your market right now. Tick the ones that fit the brand. We’ll write campaign ideas around them. Untick any you don’t want."
             listLabel="Trends"
             addLabel="Add a trend"
-            addPlaceholder="e.g. Iced coffee for summer"
+            addPlaceholder="e.g. Photographers switching to AI culling"
             onAdd={marketActions.addTrend}
             onBack={back}
             onContinue={next}

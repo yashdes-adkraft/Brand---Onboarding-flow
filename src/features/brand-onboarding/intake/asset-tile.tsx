@@ -1,4 +1,6 @@
 import { FileIcon } from "@untitledui/file-icons";
+import { XClose } from "@untitledui/icons";
+import { Button as AriaButton } from "react-aria-components";
 import { Badge } from "@/components/base/badges/badges";
 import { ProgressBarBase } from "@/components/base/progress-indicators/progress-indicators";
 import playButton from "@/assets/intake/play-button.svg";
@@ -43,6 +45,8 @@ export interface AssetTileProps {
     duration?: string;
     /** Letter shown on the logo placeholder when there is no preview (the brand's initial). */
     monogram?: string;
+    /** Shows a × on the tile that removes the file (logo, image, video or document). */
+    onRemove?: () => void;
 }
 
 const Thumb = ({ name, type, preview, duration, monogram }: AssetTileProps) => {
@@ -92,7 +96,7 @@ const Thumb = ({ name, type, preview, duration, monogram }: AssetTileProps) => {
 
 /** Figma "Tile/*" (66:4329 …) — thumbnail, kind badge, file name and size or upload progress. */
 export const AssetTile = (props: AssetTileProps) => {
-    const { name, size, type, progress } = props;
+    const { name, size, type, progress, onRemove } = props;
     const badge = KIND_BADGE[kindOf({ name, type })];
     const uploading = progress !== undefined && progress < 100;
 
@@ -103,6 +107,15 @@ export const AssetTile = (props: AssetTileProps) => {
                 <Badge type="pill-color" color={badge.color} size="sm" className="absolute top-2 left-2">
                     {badge.label}
                 </Badge>
+                {onRemove && (
+                    <AriaButton
+                        aria-label={`Remove ${name}`}
+                        onPress={onRemove}
+                        className="absolute top-1.5 right-1.5 flex size-6 cursor-pointer items-center justify-center rounded-full bg-black/55 text-white outline-focus-ring transition hover:bg-black/75 focus-visible:outline-2 focus-visible:outline-offset-2"
+                    >
+                        <XClose aria-hidden className="size-3.5" />
+                    </AriaButton>
+                )}
             </div>
             {/* Reserve the uploading layout's height so the grid doesn't jump when an upload finishes. */}
             <div className="flex min-h-[62px] flex-col px-2.5 py-2 text-xs leading-[18px]">

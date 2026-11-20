@@ -67,7 +67,7 @@ export const CompetitorAdd = ({ addLabel, placeholder }: CompetitorAddProps) => 
 
     return (
         <form
-            className="relative w-full"
+            className="flex w-full items-start gap-3"
             noValidate
             onSubmit={(e) => {
                 e.preventDefault();
@@ -85,66 +85,74 @@ export const CompetitorAdd = ({ addLabel, placeholder }: CompetitorAddProps) => 
                 if (!e.currentTarget.contains(e.relatedTarget as Node | null) && !value.trim()) close();
             }}
         >
-            <Input
-                ref={inputRef}
-                autoFocus
-                size="lg"
-                aria-label={addLabel}
-                placeholder={placeholder}
-                value={value}
-                onChange={(v) => {
-                    setValue(v);
-                    setError(false);
-                }}
-                isInvalid={error}
-                hint={error ? <span role="alert">Enter a valid website</span> : undefined}
-                aria-controls={suggestions.length ? menuId : undefined}
-                onKeyDown={(e) => {
-                    if (e.key === "Escape") close();
-                    if (e.key === "ArrowDown" && suggestions.length) {
-                        e.preventDefault();
-                        optionRefs.current[0]?.focus();
-                    }
-                }}
-            />
+            <div className="relative min-w-0 flex-1">
+                <Input
+                    ref={inputRef}
+                    autoFocus
+                    size="lg"
+                    aria-label={addLabel}
+                    placeholder={placeholder}
+                    value={value}
+                    onChange={(v) => {
+                        setValue(v);
+                        setError(false);
+                    }}
+                    isInvalid={error}
+                    hint={error ? <span role="alert">Enter a valid website</span> : undefined}
+                    aria-controls={suggestions.length ? menuId : undefined}
+                    onKeyDown={(e) => {
+                        if (e.key === "Escape") close();
+                        if (e.key === "ArrowDown" && suggestions.length) {
+                            e.preventDefault();
+                            optionRefs.current[0]?.focus();
+                        }
+                    }}
+                />
 
-            {suggestions.length > 0 && (
-                <div
-                    id={menuId}
-                    role="listbox"
-                    aria-label="Suggestions"
-                    className="absolute top-full left-0 z-20 mt-1.5 flex w-full flex-col rounded-lg border border-secondary bg-primary p-1 shadow-lg"
-                >
-                    {suggestions.map((s, i) => (
-                        <button
-                            key={s.website}
-                            ref={(el) => {
-                                optionRefs.current[i] = el;
-                            }}
-                            type="button"
-                            role="option"
-                            aria-selected={i === 0}
-                            onClick={() => submit(s.website)}
-                            onKeyDown={(e) => {
-                                if (e.key === "ArrowDown") optionRefs.current[i + 1]?.focus();
-                                if (e.key === "ArrowUp") (optionRefs.current[i - 1] ?? inputRef.current)?.focus();
-                                if (e.key === "ArrowDown" || e.key === "ArrowUp") e.preventDefault();
-                            }}
-                            className={cx(
-                                "flex w-full cursor-pointer items-center gap-3 rounded-md px-2.5 py-2 text-left text-sm outline-hidden hover:bg-secondary focus-visible:bg-secondary",
-                                // Figma shows the top match highlighted.
-                                i === 0 && "bg-secondary",
-                            )}
-                        >
-                            {s.logo && <img src={s.logo} alt="" className="size-8 shrink-0" />}
-                            <span className="flex items-center gap-2 whitespace-nowrap">
-                                <span className="font-medium text-primary">{s.name}</span>
-                                <span className="text-tertiary">{s.website}</span>
-                            </span>
-                        </button>
-                    ))}
-                </div>
-            )}
+                {suggestions.length > 0 && (
+                    <div
+                        id={menuId}
+                        role="listbox"
+                        aria-label="Suggestions"
+                        className="absolute top-full left-0 z-20 mt-1.5 flex w-full flex-col rounded-lg border border-secondary bg-primary p-1 shadow-lg"
+                    >
+                        {suggestions.map((s, i) => (
+                            <button
+                                key={s.website}
+                                ref={(el) => {
+                                    optionRefs.current[i] = el;
+                                }}
+                                type="button"
+                                role="option"
+                                aria-selected={i === 0}
+                                onClick={() => submit(s.website)}
+                                onKeyDown={(e) => {
+                                    if (e.key === "ArrowDown") optionRefs.current[i + 1]?.focus();
+                                    if (e.key === "ArrowUp") (optionRefs.current[i - 1] ?? inputRef.current)?.focus();
+                                    if (e.key === "ArrowDown" || e.key === "ArrowUp") e.preventDefault();
+                                }}
+                                className={cx(
+                                    "flex w-full cursor-pointer items-center gap-3 rounded-md px-2.5 py-2 text-left text-sm outline-hidden hover:bg-secondary focus-visible:bg-secondary",
+                                    // Figma shows the top match highlighted.
+                                    i === 0 && "bg-secondary",
+                                )}
+                            >
+                                {s.logo && <img src={s.logo} alt="" className="size-8 shrink-0" />}
+                                <span className="flex items-center gap-2 whitespace-nowrap">
+                                    <span className="font-medium text-primary">{s.name}</span>
+                                    <span className="text-tertiary">{s.website}</span>
+                                </span>
+                            </button>
+                        ))}
+                    </div>
+                )}
+            </div>
+            <Button type="button" color="secondary" size="lg" onClick={close}>
+                Cancel
+            </Button>
+            <Button type="submit" size="lg" isDisabled={!value.trim()}>
+                Add
+            </Button>
         </form>
     );
 };

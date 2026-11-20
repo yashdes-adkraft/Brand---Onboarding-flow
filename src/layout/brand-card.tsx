@@ -3,6 +3,7 @@ import { Avatar } from "@/components/base/avatar/avatar";
 import { BadgeWithDot } from "@/components/base/badges/badges";
 import { Dropdown } from "@/components/base/dropdown/dropdown";
 import { cx } from "@/utils/cx";
+import type { OnboardingDraft, StepId } from "@/features/brand-onboarding/flow";
 import type { SocialPlatform } from "@/features/brand-onboarding/review/review-data";
 
 /** A brand on the Brands page: still being researched (the user pressed "Run in background"), or finished. */
@@ -14,10 +15,34 @@ export interface Brand {
     /** Logo image URL. */
     logo: string;
     channels: SocialPlatform[];
-    status: "researching" | "researched";
+    status: "researching" | "researched" | "draft";
+    /** Draft only: the step the user saved and exited from, and everything entered so far. */
+    resume?: { step: StepId; data: OnboardingDraft };
+    /** Colours entered by hand (manual setup), as #RRGGBB. */
+    colours?: string[];
     /** When it was added (ms), for "2h ago" and the Recent sort. */
     createdAt: number;
 }
+
+/** Where a saved draft stops, in the words a person would use. */
+const STEP_LABEL: Record<StepId, string> = {
+    website: "Website",
+    category: "Business category",
+    audience: "Audience",
+    assets: "Brand files",
+    research: "Research",
+    review: "Review",
+    competitors: "Competitors",
+    trends: "Trends",
+    ready: "Final check",
+    manual: "Manual setup",
+};
+
+export const STATUS_LABEL = { researching: "Researching", researched: "Researched", draft: "Draft" } as const;
+export const STATUS_COLOR = { researching: "brand", researched: "success", draft: "gray" } as const;
+export const openLabel = (b: Brand) => (b.status === "draft" ? "Continue setup" : b.status === "researching" ? "View progress" : "View overview");
+/** The line under the name: category and site, or for a draft, where it was left. */
+export const subline = (b: Brand) => (b.status === "draft" ? `Paused at ${STEP_LABEL[b.resume?.step ?? "website"]}` : [b.category, b.domain].filter(Boolean).join(" · "));
 
 /** Research is six stages (brand kit, socials, audience, assets, brief, competitors); the prototype shows 3 of 6 while researching. */
 export const STAGES = 6;
@@ -49,6 +74,8 @@ export const BrandCard = ({ brand, onOpen, onDelete }: BrandCardProps) => {
         <article
             className={cx(
                 "relative flex flex-col gap-4 rounded-xl border border-secondary bg-primary p-5 shadow-xs transition duration-200 ease-out",
+                // While research runs, the card's edges glow in the brand colours until it finishes.
+                researching && "card-glow",
                 "hover:border-primary hover:shadow-md focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-focus-ring motion-reduce:transition-none",
             )}
         >
@@ -60,7 +87,7 @@ export const BrandCard = ({ brand, onOpen, onDelete }: BrandCardProps) => {
                         <Dropdown.Popover className="w-44">
                             <Dropdown.Menu>
                                 <Dropdown.Item icon={ArrowUpRight} onAction={() => onOpen(brand)}>
-                                    {researching ? "View progress" : "View overview"}
+                                    {openLabel(brand)}
                                 </Dropdown.Item>
                                 <Dropdown.Separator />
                                 <Dropdown.Item icon={Trash01} onAction={() => onDelete(brand)}>
@@ -78,14 +105,12 @@ export const BrandCard = ({ brand, onOpen, onDelete }: BrandCardProps) => {
                         {brand.name}
                     </button>
                 </h3>
-                <p className="truncate text-sm text-tertiary">
-                    {brand.category} · {brand.domain}
-                </p>
+                <p className="truncate text-sm text-tertiary">{subline(brand)}</p>
             </div>
 
             <div className="flex items-center gap-3">
-                <BadgeWithDot color={researching ? "brand" : "success"} size="sm">
-                    {researching ? "Researching" : "Researched"}
+                <BadgeWithDot color={STATUS_COLOR[brand.status]} size="sm">
+                    {STATUS_LABEL[brand.status]}
                 </BadgeWithDot>
                 <span className="flex-1" />
                 <Clock aria-hidden className="size-3.5 text-fg-quaternary" />

@@ -8,6 +8,7 @@ import { reviewStep } from "./review";
 import { competitorsStep } from "./competitors";
 import { trendsStep } from "./trends";
 import { readyStep } from "./ready";
+import { manualStep } from "./manual";
 
 /** One entry per step id in STEP_ORDER. Each step file owns its own definition. */
 export const STEPS: Record<StepId, StepDefinition> = {
@@ -20,4 +21,5 @@ export const STEPS: Record<StepId, StepDefinition> = {
     competitors: competitorsStep,
     trends: trendsStep,
     ready: readyStep,
+    manual: manualStep,
 };

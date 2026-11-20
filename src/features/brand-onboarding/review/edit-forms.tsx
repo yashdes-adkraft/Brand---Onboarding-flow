@@ -124,7 +124,7 @@ export const BrandEditForm = (props: FormProps<BrandValues>) => {
                     <ColourEditor values={values.colours} onChange={(v) => set("colours", v)} />
                 </FormRow>
                 <FormRow label="Category" field="category">
-                    <OptionSelect label="Category" value={values.category} options={OPTIONS.category} onChange={(v) => set("category", v)} />
+                    <OptionSelect label="Category" value={values.category} options={OPTIONS.category} onChange={(v) => set("category", v)} allowOther />
                 </FormRow>
                 <FormRow label="Market" field="market">
                     <OptionSelect label="Market" value={values.market} options={OPTIONS.market} onChange={(v) => set("market", v)} />

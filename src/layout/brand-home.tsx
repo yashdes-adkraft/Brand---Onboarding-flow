@@ -11,7 +11,7 @@ import { type SocialPlatform, accountFor } from "@/features/brand-onboarding/rev
 import glowTop from "@/assets/glow-top.svg";
 import { cx } from "@/utils/cx";
 import type { Brand } from "./brand-card";
-import { DEFAULT_COLOURS, DEFAULT_DONTS, DEFAULT_DOS, DEFAULT_KEYWORDS, DEFAULT_VOICE } from "./identity-data";
+import { DEFAULT_DONTS, DEFAULT_DOS, DEFAULT_KEYWORDS, DEFAULT_VOICE, coloursFor } from "./identity-data";
 import { KraftyIcon } from "./krafty-icon";
 
 export type HomeGo = (section: "identity" | "ambassadors" | "channels", tab?: "voice" | "palette") => void;
@@ -141,10 +141,12 @@ export const BrandHome = ({ brand, channels, ambassadorCount, ambassadorSkipped,
                         </div>
                         {/* Website, category and channels on one line */}
                         <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-md text-tertiary">
-                            <span className="flex items-center gap-1.5">
-                                <Globe02 aria-hidden className="size-4 text-fg-quaternary" />
-                                {brand.domain}
-                            </span>
+                            {brand.domain && (
+                                <span className="flex items-center gap-1.5">
+                                    <Globe02 aria-hidden className="size-4 text-fg-quaternary" />
+                                    {brand.domain}
+                                </span>
+                            )}
                             <span>{brand.category}</span>
                             <span className="flex items-center gap-2" aria-label="Channels">
                                 {channels.length > 0 ? (
@@ -279,7 +281,7 @@ export const BrandHome = ({ brand, channels, ambassadorCount, ambassadorSkipped,
                         </div>
                         <p className="text-sm text-tertiary">Colours taken from the {brand.name} logo.</p>
                         <ul className="grid grid-cols-2 gap-3">
-                            {DEFAULT_COLOURS.map((c) => (
+                            {coloursFor(brand.colours).map((c) => (
                                 <li key={c.id} className="flex flex-col overflow-clip rounded-xl border border-secondary">
                                     <span className="h-16" style={{ backgroundColor: c.hex }} />
                                     <span className="flex items-center justify-between gap-2 px-3 py-2.5">

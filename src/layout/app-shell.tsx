@@ -93,6 +93,7 @@ export const BrandsSidebar = ({
     onNewBrand,
     brandCount = 0,
     researchingCount = 0,
+    draftCount = 0,
     brands = [],
     onOpenBrand,
 }: {
@@ -101,6 +102,8 @@ export const BrandsSidebar = ({
     onNewBrand: () => void;
     brandCount?: number;
     researchingCount?: number;
+    /** Saved drafts, listed under "Ready to set up". */
+    draftCount?: number;
     brands?: Brand[];
     onOpenBrand?: (brand: Brand) => void;
 }) => (
@@ -112,9 +115,9 @@ export const BrandsSidebar = ({
         <NavRow label="All brands" count={brandCount} active={statusFilter === null} onClick={() => onStatusFilter?.(null)} lead={<Grid01 className="size-5 text-fg-quaternary" />} />
         <p className="w-full px-2.5 pt-3.5 pb-1.5 text-xs font-semibold tracking-[0.48px] text-tertiary">STATUS</p>
         <NavRow label="Plan ready" count={0} active={statusFilter === "plan-ready"} onClick={() => onStatusFilter?.("plan-ready")} lead={<Dot className="bg-status-plan-ready" />} />
-        <NavRow label="Researched" count={brandCount - researchingCount} active={statusFilter === "researched"} onClick={() => onStatusFilter?.("researched")} lead={<Dot className="bg-status-researched" />} />
+        <NavRow label="Researched" count={brandCount - researchingCount - draftCount} active={statusFilter === "researched"} onClick={() => onStatusFilter?.("researched")} lead={<Dot className="bg-status-researched" />} />
         <NavRow label="Researching" count={researchingCount} active={statusFilter === "researching"} onClick={() => onStatusFilter?.("researching")} lead={<Dot className="bg-status-researching" />} />
-        <NavRow label="Ready to set up" count={0} active={statusFilter === "ready"} onClick={() => onStatusFilter?.("ready")} lead={<Dot className="bg-status-ready" />} />
+        <NavRow label="Ready to set up" count={draftCount} active={statusFilter === "ready"} onClick={() => onStatusFilter?.("ready")} lead={<Dot className="bg-status-ready" />} />
         {brands.length > 0 && (
             <>
                 <p className="w-full px-2.5 pt-3.5 pb-1.5 text-xs font-semibold tracking-[0.48px] text-tertiary">RECENT</p>
@@ -161,7 +164,7 @@ export const BrandsPage = ({ statusFilter = null, onNewBrand, brands = [], onOpe
 
     const q = query.trim().toLowerCase();
     const shown = brands
-        .filter((b) => statusFilter === null || b.status === statusFilter)
+        .filter((b) => statusFilter === null || (statusFilter === "ready" ? b.status === "draft" : b.status === statusFilter))
         .filter((b) => !q || `${b.name} ${b.domain} ${b.category}`.toLowerCase().includes(q))
         .sort((a, b) => (sort === "name" ? a.name.localeCompare(b.name) : b.createdAt - a.createdAt));
 
